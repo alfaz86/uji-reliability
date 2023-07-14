@@ -4,86 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uji Reability</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
-    <form id="form">
-        <input type="file" id="file" accept=".csv" required />
-        <br />
-        <input type="submit" value="Submit" />
-    </form>
-    <section>
-        <table border="1" id="display-responden">
-            <thead>
-                <tr>
-                    <td rowspan="2">No Responden</td>
-                    <td id="colspan" colspan="1">No Soal</td>
-                </tr>
-                <tr id="question-number">
-                    <td>1</td>
-                </tr>
-            </thead>
-            <tbody id="result">
-            </tbody>
-        </table>
-    </section>
+    <div class="container">
+        <h1>UJI VALIDITAS DAN RELIABILITAS</h1>
+        <form id="form" class="my-3">
+            <div class="form-group">
+                <label for="file">Input CSV</label>
+                <input type="file" id="file" accept=".csv" class="form-control-file p-2 border rounded" required />
+            </div>
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+        </form>
+        <hr>
+        <button type="button" class="btn btn-success mb-3 d-none" onclick="('row1')">UJI VALIDITAS</button>
+        <button type="button" class="btn btn-info mb-3 d-none" onclick="('row1')">UJI RELIABILITAS</button>
+        
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-csv-tab" data-toggle="tab" href="#nav-csv" role="tab" aria-controls="nav-csv" aria-selected="true">Tabel Responden</a>
+                <a class="nav-item nav-link d-none" id="nav-validitas-tab" data-toggle="tab" href="#nav-validitas" role="tab" aria-controls="nav-validitas" aria-selected="false">Hasil Uji Validitas</a>
+                <a class="nav-item nav-link d-none" id="nav-reliabilitas-tab" data-toggle="tab" href="#nav-reliabilitas" role="tab" aria-controls="nav-reliabilitas" aria-selected="false">Hasil Uji Reliabilitas</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-csv" role="tabpanel" aria-labelledby="nav-csv-tab">
+                <div class="mt-3">
+                    <div class="table-responsive">
+                        <table border="1" id="display-responden" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">No Responden</td>
+                                    <td id="colspan" colspan="1">No Soal</td>
+                                    <td rowspan="2">Total</td>
+                                </tr>
+                                <tr id="question-number">
+                                    <td>1</td>
+                                </tr>
+                            </thead>
+                            <tbody id="result">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-validitas" role="tabpanel" aria-labelledby="nav-validitas-tab">...</div>
+            <div class="tab-pane fade" id="nav-reliabilitas" role="tabpanel" aria-labelledby="nav-reliabilitas-tab">...</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/display-csv.js"></script>
+    <script src="js/pearson.js"></script>
     <script>
-        const myForm = document.getElementById("form");
-        const csvFile = document.getElementById("file");
-        const colspan = document.getElementById("colspan");
-        const question_number = document.getElementById("question-number");
-        const result = document.getElementById("result");
+        let dataQuestions = [];
+        function checkCorrel(rowQ) {
+            let arrX1;
+            let arr$Y;
+            let R;
 
-        myForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const input = csvFile.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                const text = e.target.result;
-                const array = csvToArray(text);
-                arrayToTable(array)
-            };
-
-            reader.readAsText(input);
-
-            function csvToArray(str, delimiter = ",") {
-                let array = str.split("\r\n").map(function (line) {
-                    return line.split(delimiter);
-                });
-
-                return array;
+            if (dataQuestions["total"]) {
+                arrX1 = dataQuestions["row1"];
+                arr$Y = dataQuestions["total"];
+                R = correl(arrX1, arr$Y);
+                console.log('arrX1', arrX1, 'arr$Y', arr$Y, 'R', R);
             }
-
-            function generateQuestionNumber(totalQuestion) {
-                return new Promise(resolve => {
-                    colspan.colSpan = totalQuestion;
-                    let cols = ``;
-                    let i = 1;
-                    while (i <= totalQuestion) {
-                        cols += `<td>${i}</td>`;
-                        i++;
-                    }
-                    question_number.innerHTML = cols;
-                    resolve('resolved');
-                });
-            }
-
-            async function arrayToTable(array) {
-                let rows = ``;
-                let totalQ = 0;
-                array.forEach((valueOfArray, index) => {
-                    if (index === 0) totalQ = valueOfArray.length;
-                    const tdsArray = valueOfArray.map(value => `<td>${value}</td>`);
-                    const tdsString = tdsArray.join("");
-                    rows += `<tr>`;
-                    rows += `<td>${index+1}</td>`;
-                    rows += tdsString;
-                    rows += `</tr>`;
-                });
-                await generateQuestionNumber(totalQ)
-                result.innerHTML = rows;
-            }
-        });
+            
+        }
     </script>
 </body>
 </html>
