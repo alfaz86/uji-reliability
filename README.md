@@ -1,1 +1,1 @@
-# uji-reliability
+# UJI VALIDITAS DAN RELIABILITAS

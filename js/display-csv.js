@@ -1,8 +1,24 @@
 const myForm = document.getElementById("form");
 const csvFile = document.getElementById("file");
+const significance = document.getElementById("significance");
+const btnV = document.getElementById("btn-validitas");
+const btnR = document.getElementById("btn-reliabilitas");
+const navVTab = document.getElementById("nav-validitas-tab");
 const colspan = document.getElementById("colspan");
-const question_number = document.getElementById("question-number");
+const questionNumber = document.getElementById("question-number");
 const result = document.getElementById("result");
+const resultV = document.getElementById("result-validitas");
+
+let dataQuestions = [];
+let validDataQuestions = [];
+let tingkatSignifikansi = 1;
+let totalQuestion = 1;
+let totalRespondent = 1;
+
+significance.addEventListener("change", function (e) {
+    e.preventDefault();
+    tingkatSignifikansi = this.value
+});
 
 myForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -31,10 +47,10 @@ myForm.addEventListener("submit", function (e) {
             let cols = ``;
             let i = 1;
             while (i <= totalQuestion) {
-                cols += `<td>${i}</td>`;
+                cols += `<td style="min-width: 50px">${i}</td>`;
                 i++;
             }
-            question_number.innerHTML = cols;
+            questionNumber.innerHTML = cols;
             resolve('resolved');
         });
     }
@@ -74,5 +90,8 @@ myForm.addEventListener("submit", function (e) {
         await generateQuestionNumber(totalQ);
         result.innerHTML = rows;
         dataQuestions = dataQ;
+        totalQuestion = totalQ;
+        totalRespondent = array.length;
+        btnV.classList.remove("d-none");
     }
 });
