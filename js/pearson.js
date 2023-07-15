@@ -1,4 +1,4 @@
-const correl = (x, y) => {
+const CORREL = (x, y) => {
     let sumX = 0,
         sumY = 0,
         sumXY = 0,
