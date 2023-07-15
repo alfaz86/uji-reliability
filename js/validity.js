@@ -7,12 +7,12 @@ const calculateValidity = () => {
     var data = [];
 
     Object.keys(dataQuestions).forEach((key, index) => {
-        var arrXn = dataQuestions[key] != "total" ? dataQuestions[key] : null;
+        var arrXn = key != "total" ? dataQuestions[key] : [];
         var arr$Y = dataQuestions["total"];
-        var R = correl(arrXn, arr$Y);
+        var R = CORREL(arrXn, arr$Y);
         var status = R > rtabel ? valid : notValid;
 
-        if (R > rtabel && dataQuestions[key] != "total") {
+        if (R > rtabel && key != "total") {
             data.push(dataQuestions[key]);
         }
         if (index < totalQuestion) {

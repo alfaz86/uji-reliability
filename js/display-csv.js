@@ -4,10 +4,12 @@ const significance = document.getElementById("significance");
 const btnV = document.getElementById("btn-validitas");
 const btnR = document.getElementById("btn-reliabilitas");
 const navVTab = document.getElementById("nav-validitas-tab");
+const navRTab = document.getElementById("nav-reliabilitas-tab");
 const colspan = document.getElementById("colspan");
 const questionNumber = document.getElementById("question-number");
 const result = document.getElementById("result");
 const resultV = document.getElementById("result-validitas");
+const resultR = document.getElementById("result-reliabilitas");
 
 let dataQuestions = [];
 let validDataQuestions = [];
@@ -64,11 +66,11 @@ myForm.addEventListener("submit", function (e) {
             let total = 0;
             const tdsArray = valueOfArray.map((value, i) => {
                 var nValue = Number(value);
-                var thisRow = `row${i + 1}`;
+                var thisCol = `col${i + 1}`;
                 if (index === 0) {
-                    dataQ[thisRow] = [nValue];
+                    dataQ[thisCol] = [nValue];
                 } else {
-                    dataQ[thisRow].push(nValue);
+                    dataQ[thisCol].push(nValue);
                 }
 
                 total += nValue;
