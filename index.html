@@ -3,109 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UJI VALIDITAS DAN RELIABILITAS</title>
+    <title>Uji Realibilitas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lunasima&family=Montserrat&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
 </head>
 <body>
-    <div class="container">
-        <h1>UJI VALIDITAS DAN RELIABILITAS</h1>
-        <form id="form" class="my-3">
-            <div class="form-group">
-                <label>Input CSV</label>
-                <input type="file" id="file" accept=".csv" class="form-control-file p-2 border rounded" required />
-            </div>
-            <div class="form-group">
-                <label>Tingkat Signifikansi</label>
-                <select id="significance" class="form-control" required>
-                    <optgroup label="Satu arah">
-                        <option value="1" selected>5%</option>
-                        <option value="2">2,5%</option>
-                        <option value="3">1%</option>
-                        <option value="4">0,5%</option>
-                        <option value="5">0,05%</option>
-                    </optgroup>
-                    <optgroup label="Dua arah">
-                        <option value="1">10%</option>
-                        <option value="2">5%</option>
-                        <option value="3">2%</option>
-                        <option value="4">1%</option>
-                        <option value="5">0,1%</option>
-                    </optgroup>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">SUBMIT</button>
-        </form>
-        <hr>
-        <button type="button" class="btn btn-success mb-3 d-none" onclick="calculateValidity()" id="btn-validitas">UJI VALIDITAS</button>
-        <button type="button" class="btn btn-info mb-3 d-none" onclick="calculateReliability()" id="btn-reliabilitas">UJI RELIABILITAS</button>
-        
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-csv-tab" data-toggle="tab" href="#nav-csv" role="tab" aria-controls="nav-csv" aria-selected="true">Tabel Responden</a>
-                <a class="nav-item nav-link d-none" id="nav-validitas-tab" data-toggle="tab" href="#nav-validitas" role="tab" aria-controls="nav-validitas" aria-selected="false">Hasil Uji Validitas</a>
-                <a class="nav-item nav-link d-none" id="nav-reliabilitas-tab" data-toggle="tab" href="#nav-reliabilitas" role="tab" aria-controls="nav-reliabilitas" aria-selected="false">Hasil Uji Reliabilitas</a>
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-csv" role="tabpanel" aria-labelledby="nav-csv-tab">
-                <div class="mt-3">
-                    <div class="table-responsive">
-                        <table id="display-responden" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <td rowspan="2">No Responden</td>
-                                    <td id="colspan" colspan="1">No Soal</td>
-                                    <td rowspan="2">Total</td>
-                                </tr>
-                                <tr id="question-number">
-                                    <td>1</td>
-                                </tr>
-                            </thead>
-                            <tbody id="result">
-                            </tbody>
-                        </table>
+    <nav class="navbar fixed-top navbar-white bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/media/my-logo.png" height="30" class="d-inline-block align-top" alt="my-logo">
+                Uji Reliabilitas
+            </a>
+        </div>
+    </nav>
+    <section id="jumbotron">
+        <div class="container h-100">
+            <div class="row align-items-center h-100">
+                <div class="col-12 col-md-6">
+                    <h1 id="jumbotron-title"><b>Uji Kelayakan Kuesioner</b></h1>
+                    <p id="jumbotron-desc" class="w-sort">Uji kelayakan kuesioner dilakukan untuk menguji kuesioner yang digunakan telah memenuhi syarat baik atau tidak. Instrumen penelitian dikatakan baik apabila telah memenuhi uji validitas dan uji reliabilitas.</p>
+                    <a class="btn-theme" href="#form">Mulai</a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card shadow">
+                        <div class="card-header gif-header">
+                            <h5 class="m-0">Feature</h5>
+                        </div>
+                        <img src="/media/tutor.gif" id="gif">
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-validitas" role="tabpanel" aria-labelledby="nav-validitas-tab">
-                <div class="mt-3">
-                    <h5>Ringkasan Hasil Uji Validitas</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <td>No. Soal</td>
-                                    <td>R Hitung</td>
-                                    <td>R Tabel</td>
-                                    <td>Status</td>
-                                </tr>
-                            </thead>
-                            <tbody id="result-validitas">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        </div>
+    </section>
+
+    <div class="container mt-5">
+        <div class="section-title">
+            <span>validitas</span>
+            <h2>validitas</h2>
+            <div class="d-flex justify-content-center">
+                <p class="w-sort">Uji validitas ini dilakukan untuk mengukur apakah data yang telah didapat setelah penelitian merupakan data yang valid atau tidak, dengan menggunakan alat ukur yang digunakan (kuesioner).</p>
             </div>
-            <div class="tab-pane fade" id="nav-reliabilitas" role="tabpanel" aria-labelledby="nav-reliabilitas-tab">
-                <div class="mt-3">
-                    <h5>Hasil Uji Reliabilitas Cronbach Alpha</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <td>Koefisien Reliabilitas</td>
-                                    <td>Interpretasi</td>
-                                </tr>
-                            </thead>
-                            <tbody id="result-reliabilitas">
-                            </tbody>
-                        </table>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="section-title">
+            <span>reliabilitas</span>
+            <h2>reliabilitas</h2>
+            <div class="d-flex justify-content-center">
+                <p class="w-sort">Realibilitas adalah ukuran yang menunjukkan konsistensi dari alat ukur dalam mengukur gejala yang sama di lain kesempatan.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="card shadow" id="form">
+            <div class="card-header title-form">
+                <b>Lakukan Pengujian</b>
+            </div>
+            <div class="card-body">
+                <div class="options d-flex align-items-start">
+                    <button class="btn-theme-form" id="btn-file"><i class="bi bi-upload"></i> upload csv</button>
+                    <input type="file" id="file" accept=".csv"/>
+                    <select id="significance" class="btn-significance-form ml-1" >
+                        <optgroup label="Satu arah">
+                            <option value="1" selected>5%</option>
+                            <option value="2">2,5%</option>
+                            <option value="3">1%</option>
+                            <option value="4">0,5%</option>
+                            <option value="5">0,05%</option>
+                        </optgroup>
+                        <optgroup label="Dua arah">
+                            <option value="1">10%</option>
+                            <option value="2">5%</option>
+                            <option value="3">2%</option>
+                            <option value="4">1%</option>
+                            <option value="5">0,1%</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div id="content" class="mt-3">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-csv-tab" data-toggle="tab" href="#nav-csv" role="tab" aria-controls="nav-csv" aria-selected="true">Tabel Responden</a>
+                            <a class="nav-item nav-link d-none" id="nav-validitas-tab" data-toggle="tab" href="#nav-validitas" role="tab" aria-controls="nav-validitas" aria-selected="false">Hasil Uji Validitas</a>
+                            <a class="nav-item nav-link d-none" id="nav-reliabilitas-tab" data-toggle="tab" href="#nav-reliabilitas" role="tab" aria-controls="nav-reliabilitas" aria-selected="false">Hasil Uji Reliabilitas</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-csv" role="tabpanel" aria-labelledby="nav-csv-tab">
+                            <div class="mt-3">
+                                <pre><div class="table-responsive"><table id="display-responden" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">No Responden</td>
+                                            <td id="colspan" colspan="1">No Soal</td>
+                                            <td rowspan="2">Total</td>
+                                        </tr>
+                                        <tr id="question-number">
+                                            <td>1</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result">
+                                    </tbody>
+                                </table></div></pre>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-validitas" role="tabpanel" aria-labelledby="nav-validitas-tab">
+                            <div class="mt-3">
+                                <h5>Ringkasan Hasil Uji Validitas</h5>
+                                <pre><div class="table-responsive"><table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>No. Soal</td>
+                                            <td>R Hitung</td>
+                                            <td>R Tabel</td>
+                                            <td>Status</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result-validitas">
+                                    </tbody>
+                                </table></div></pre>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-reliabilitas" role="tabpanel" aria-labelledby="nav-reliabilitas-tab">
+                            <div class="mt-3">
+                                <h5>Hasil Uji Reliabilitas Cronbach Alpha</h5>
+                                <pre><div class="table-responsive"><table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Koefisien Reliabilitas</td>
+                                            <td>Interpretasi</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result-reliabilitas">
+                                    </tbody>
+                                </table></div></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="container h-100">
+            <div class="row h-100 m-0">
+                <div class="col-12 col-md-4 col-l">
+                    
+                </div>
+                <div class="col-12 col-md-8 col-r">
+    
+                </div>
+            </div>
+            <p class="py-3 created-by">Created by <a href="https://github.com/alfaz86">aLfAz</a></p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -28,5 +28,5 @@ const calculateValidity = () => {
     navVTab.classList.remove("d-none");
     resultV.innerHTML = rows;
     validDataQuestions = data;
-    btnR.classList.remove("d-none");
+    calculateReliability()
 }

@@ -1,5 +1,6 @@
 const myForm = document.getElementById("form");
 const csvFile = document.getElementById("file");
+const btnFile = document.getElementById("btn-file");
 const significance = document.getElementById("significance");
 const btnV = document.getElementById("btn-validitas");
 const btnR = document.getElementById("btn-reliabilitas");
@@ -17,13 +18,23 @@ let tingkatSignifikansi = 1;
 let totalQuestion = 1;
 let totalRespondent = 1;
 
-significance.addEventListener("change", function (e) {
+btnFile.addEventListener("click", function (e) {
     e.preventDefault();
-    tingkatSignifikansi = this.value
+    csvFile.click()
 });
 
-myForm.addEventListener("submit", function (e) {
+significance.addEventListener("change", function (e) {
     e.preventDefault();
+    tingkatSignifikansi = this.value;
+    displayCSV()
+});
+
+csvFile.addEventListener("input", function (e) {
+    e.preventDefault();
+    displayCSV()
+});
+
+function displayCSV() {
     const input = csvFile.files[0];
     const reader = new FileReader();
 
@@ -94,6 +105,6 @@ myForm.addEventListener("submit", function (e) {
         dataQuestions = dataQ;
         totalQuestion = totalQ;
         totalRespondent = array.length;
-        btnV.classList.remove("d-none");
+        calculateValidity()
     }
-});
+}
